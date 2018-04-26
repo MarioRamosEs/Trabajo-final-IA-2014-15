@@ -62,7 +62,6 @@ class SearchProblem:
         """
         util.raiseNotDefined()
 
-
 def tinyMazeSearch(problem):
     """
     Returns a sequence of moves that solves tinyMaze.  For any other maze, the
@@ -86,7 +85,6 @@ class Nodo:
         if self.state == nodaso.state:
             return 0
         return 1
-    #http://stackoverflow.com/questions/12908933/overriding-cmp-python-function
 
     def getState(self):
         return self.state
@@ -101,21 +99,7 @@ class Nodo:
         return self.coste
 
 def depthFirstSearch(problem):
-    """
-    Search the deepest nodes in the search tree first.
-
-    Your search algorithm needs to return a list of actions that reaches the
-    goal. Make sure to implement a graph search algorithm.
-
-    To get started, you might want to try some of these simple commands to
-    understand the search problem that is being passed in:
-
-    print "Start:", problem.getStartState()
-    print "Is the start a goal?", problem.isGoalState(problem.getStartState())
-    print "Start's successors:", problem.getSuccessors(problem.getStartState())
-    """
-    "*** YOUR CODE HERE ***"
-    return puta(problem, util.Stack(), meterNomal, nullHeuristic)
+    return search(problem, util.Stack(), meterNomal, nullHeuristic)
 
 def meterNomal(lista, elemento, coste):
     lista.push(elemento)
@@ -123,22 +107,7 @@ def meterNomal(lista, elemento, coste):
 def meterCoste(lista, elemento, coste):
     lista.push(elemento, coste)
 
-def puta(problem, tipoCola, colaPusher, heuristic):
-    """
-    Search the deepest nodes in the search tree first.
-
-    Your search algorithm needs to return a list of actions that reaches the
-    goal. Make sure to implement a graph search algorithm.
-
-    To get started, you might want to try some of these simple commands to
-    understand the search problem that is being passed in:
-
-    print "Start:", problem.getStartState()
-    print "Is the start a goal?", problem.isGoalState(problem.getStartState())
-    print "Start's successors:", problem.getSuccessors(problem.getStartState())
-    """
-    "*** YOUR CODE HERE ***"
-
+def search(problem, tipoCola, colaPusher, heuristic):
     tengoSolucion = False
     listaNegra = util.Stack()                    
     cola = tipoCola
@@ -165,9 +134,7 @@ def puta(problem, tipoCola, colaPusher, heuristic):
             b = hijo
             a = Nodo(b[0], b[1], b[2], nodo)
             if not a in listaNegra.list:
-                #colaPusher(cola, a, problem.getCostOfActions(encontrarCamino(a))+HeuristicaProaso(a, ))
                 colaPusher(cola, a, problem.getCostOfActions(encontrarCamino(a))+heuristic(a.getState(), problem))
-                #colaPusher(cola, a, problem.getCostOfActions(encontrarCamino(a))+manhattanHeuristic(a.getState(), problem))
 
     "IR ENCONTRANDO PARENTS"
     return encontrarCamino(solucion)
@@ -176,11 +143,9 @@ def encontrarCamino(solucion):
     camino = []
     selectedNodo = solucion
     while not selectedNodo.getParent() == None:
-        #print selectedNodo.getParent()
         camino.append(selectedNodo.getDireccion())    
         selectedNodo2 = selectedNodo.getParent()  
         selectedNodo = selectedNodo2
-    #camino.append(selectedNodo.getDireccion())        
     return invertir(camino)
 
 def invertir(var):
@@ -188,13 +153,11 @@ def invertir(var):
 
 def breadthFirstSearch(problem):
     """Search the shallowest nodes in the search tree first."""
-    "*** YOUR CODE HERE ***"
-    return puta(problem, util.Queue(), meterNomal, nullHeuristic)
+    return search(problem, util.Queue(), meterNomal, nullHeuristic)
 
 def uniformCostSearch(problem):
     """Search the node of least total cost first."""
-    "*** YOUR CODE HERE ***"
-    return puta(problem, util.PriorityQueue(), meterCoste, nullHeuristic)
+    return search(problem, util.PriorityQueue(), meterCoste, nullHeuristic)
     util.raiseNotDefined()
 
 def nullHeuristic(state, problem=None):
@@ -218,10 +181,7 @@ def euclideanHeuristic(position, problem, info={}):
 
 def aStarSearch(problem, heuristic=nullHeuristic):
     """Search the node that has the lowest combined cost and heuristic first."""
-    "*** YOUR CODE HERE ***"
-    return puta(problem, util.PriorityQueue(), meterCoste, heuristic)
-    util.raiseNotDefined()
-
+    return search(problem, util.PriorityQueue(), meterCoste, heuristic)
 
 # Abbreviations
 bfs = breadthFirstSearch
