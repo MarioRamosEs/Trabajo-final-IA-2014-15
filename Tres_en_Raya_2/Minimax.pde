@@ -1,7 +1,4 @@
 int Minimax(int[] TableroFuncion) {
-  int Indice = 0;
-  int MaximaPuntuacion = -200; //Se inicializan las variables con cualquier valor
-
   int[] TableroRespuestas = new int[9];
   arrayCopy(TableroFuncion, TableroRespuestas);
 
@@ -12,15 +9,14 @@ int Minimax(int[] TableroFuncion) {
   }
 
   //Busqueda de la mejor opcion
+  int Indice = 0;
+  int MaximaPuntuacion = -200;
   for (int i=0; i<9; i++) {
     if (TableroRespuestas[i] > MaximaPuntuacion) {
       MaximaPuntuacion = TableroRespuestas[i];
       Indice = i; //Mejor posicion en el tablero
     }
-    //println(i+" = "+TableroRespuestas[i]);
   }
-
-  //println(Indice);
   return Indice;
 }
 
@@ -29,7 +25,7 @@ int fMin(int []TableroFuncion, int Posicion) { //Movimiento de la maquina
   int[] NuevoTablero = new int[9];
   arrayCopy(TableroFuncion, NuevoTablero);
 
-  NuevoTablero[Posicion] = 2;
+  NuevoTablero[Posicion] = 2; //Marca la casilla como jugada por la maquina
 
   //Compruebo si puedo acabar
   if (Resultado(NuevoTablero) == 2) return 100; //Gana la maquina
@@ -42,6 +38,7 @@ int fMin(int []TableroFuncion, int Posicion) { //Movimiento de la maquina
     else TableroRespuestas[i] = 200; //Se pone este valor para que no lo seleccione al Returnear, porque ya esta usado.
   }
 
+  //VUELTA
   if (min(TableroRespuestas) == 200) return(0); //Empate
   else return min(TableroRespuestas);
 }
@@ -51,7 +48,7 @@ int fMax(int []TableroFuncion, int Posicion) { //Movimiento simulado del humano
   int[] NuevoTablero = new int[9];
   arrayCopy(TableroFuncion, NuevoTablero);
 
-  NuevoTablero[Posicion] = 1;
+  NuevoTablero[Posicion] = 1; //Marca la casilla como jugada por el humano
 
   //Compruebo si puedo acabar
   if (Resultado(NuevoTablero) == 2) return 100; //Gana la maquina
@@ -64,6 +61,7 @@ int fMax(int []TableroFuncion, int Posicion) { //Movimiento simulado del humano
     else TableroRespuestas[i] = -200; //Se pone este valor para que no lo seleccione al Returnear, porque ya esta usado.
   }
 
+  //VUELTA
   if (max(TableroRespuestas) == -200) return 0; //Empate
   else return max(TableroRespuestas);
 }

@@ -1,5 +1,5 @@
 //Version 2.4
-//16 Junio 2016 -- Por Mario Ramos
+
 int temp, temp2;
 boolean acabado = false;
 int [] tablero = {
